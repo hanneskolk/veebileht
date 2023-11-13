@@ -30,3 +30,7 @@ body {
 .button:hover {
     background-color: #45a049;
 }
+
+.text-block {
+    margin-top: 20px;
+}
