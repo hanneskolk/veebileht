@@ -1,19 +1,74 @@
 <!DOCTYPE html>
-<html lang="et">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="stiil.css">
-    <title>Tere tulemast!</title>
+    <title>Input Page</title>
+    <style>
+        body {
+            background-color: #f2f2f2; /* Neutral background color */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        input {
+            padding: 10px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            width: 100%;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #3498db;
+            color: #ffffff;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1>Tere tulemast!</h1>
-        <div class="button-container">
-            <a href="ratas.html" class="button">Õnneratas</a>
-            <a href="aboutleht.html" class="button">Meist</a>
-        </div>
-        <img src="pilt1.jpg" alt="Example Image">
+        <h1>Input Page</h1>
+        <label for="inputData">Enter Data:</label>
+        <input type="text" id="inputData" placeholder="Type here...">
+        <br>
+        <button onclick="addInput()">Add Input</button>
+        <button onclick="goToPage2()">Go to Page 2</button>
+
+        <script>
+            let inputs = [];
+
+            function addInput() {
+                const inputData = document.getElementById('inputData').value;
+                if (inputData.trim() !== "") {
+                    inputs.push(inputData);
+                    document.getElementById('inputData').value = "";
+                }
+            }
+
+            function goToPage2() {
+                sessionStorage.setItem('inputs', JSON.stringify(inputs));
+                window.location.href = 'roulette.html';
+            }
+        </script>
     </div>
 </body>
 </html>
