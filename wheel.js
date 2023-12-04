@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     document.getElementById('goBackButton').addEventListener('click', function () {
-        window.location.href = 'index.html';
+        window.location.href = 'pealeht.html';
     });
 });
 
@@ -33,7 +33,10 @@ function createWheel(words, canvas) {
         context.beginPath();
         context.moveTo(0, 0);
         context.arc(0, 0, wheelRadius, i * angle, (i + 1) * angle);
-        context.fillStyle = i % 2 === 0 ? 'red' : 'black';
+        context.fillStyle = 'red'; // Set the fill color to red
+        context.strokeStyle = 'black'; // Set the border color to black
+        context.lineWidth = 3; // Set the border width
+
         context.fill();
         context.stroke();
 
@@ -41,11 +44,12 @@ function createWheel(words, canvas) {
         context.save();
         context.rotate(i * angle + angle / 2);
         context.fillStyle = 'white';
-        context.font = '14px Arial';
-        context.fillText(words[i], wheelRadius - 40, 5);
+        context.font = '16px Arial';
+        context.fillText(words[i], wheelRadius - 150, 5);
         context.restore();
     }
 }
+
 
 function spinWheelSetup(words, canvas, resultElement) {
     let isSpinning = false;
@@ -65,73 +69,52 @@ function spinWheel(words, canvas, resultElement) {
     const angle = (2 * Math.PI) / numberOfSegments;
 
     let currentAngle = Math.random() * (Math.PI * 2);
-    let spinSpeed = 1;
+    let spinSpeed = 0.3;
 
     function drawWheel() {
         context.clearRect(-wheelRadius, -wheelRadius, canvas.width, canvas.height);
         context.translate(wheelRadius, wheelRadius);
         context.rotate(currentAngle);
-
+    
         for (let i = 0; i < numberOfSegments; i++) {
             context.beginPath();
             context.moveTo(0, 0);
             context.arc(0, 0, wheelRadius, i * angle, (i + 1) * angle);
-            context.fillStyle = i % 2 === 0 ? 'red' : 'black';
+            context.fillStyle = 'red'; // Set the fill color to red
+            context.strokeStyle = 'black'; // Set the border color to black
+            context.lineWidth = 3; // Set the border width
+    
             context.fill();
             context.stroke();
-
+    
             // Add text to the segment
             context.save();
             context.rotate(i * angle + angle / 2);
             context.fillStyle = 'white';
             context.font = '14px Arial';
-            context.fillText(words[i], wheelRadius - 40, 5);
+            context.fillText(words[i], wheelRadius - 150, 5);
             context.restore();
         }
-
+    
         context.setTransform(1, 0, 0, 1, 0, 0);
     }
+    
 
     function rotateWheel() {
         currentAngle += spinSpeed;
     
         drawWheel();
     
-        r = 0.98;
+        r = 0.99;
         spinSpeed *= r; // Gradually slow down
 
-        const topmostIndex = findTopmostIndex(words, currentAngle, numberOfSegments);
-        const winningIndex = (numberOfSegments - topmostIndex) % numberOfSegments;
-    
-        resultElement.textContent = `Result: ${words[winningIndex]}`;
-        
         if (spinSpeed > 0.001) {
             requestAnimationFrame(rotateWheel);
         } else {
-            // Find the index of the topmost tile on the wheel
-            
             isSpinning = false;
             spinWheelSetup(words, canvas, resultElement); // Allow spinning again
         }
     }
-    
-    function findTopmostIndex(words, currentAngle, numberOfSegments) {
-        // Calculate the current topmost angle
-        const topmostAngle = ((currentAngle + 0/8 * 2 * Math.PI) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI);
-    
-        // Find the index of the topmost tile
-        for (let i = 0; i < numberOfSegments; i++) {
-            const startAngle = (i * (2 * Math.PI)) / numberOfSegments;
-            const endAngle = ((i + 1) * (2 * Math.PI)) / numberOfSegments;
-    
-            if (topmostAngle >= startAngle && topmostAngle <= endAngle) {
-                return (i);
-            }
-        }
-    
-        return 0; // Default to the first tile if not found
-    }
-    
 
     rotateWheel();
 }

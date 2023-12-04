@@ -7,6 +7,7 @@
     <title>Loosiratas</title>
 </head>
 <body>
+    <button id="aboutPageButton" onclick="goToAboutPage()">Meist</button>
     <div class="container">
         <header>
             <h1>Welcome to Loosiratas!</h1>
@@ -14,9 +15,8 @@
         <section id="formSection">
             <label for="wordInput">Enter a word:</label>
             <input type="text" id="wordInput" maxlength="20">
-            <button onclick="addWord()">Add Word</button>
-            <button onclick="goToWheel()">Go to Wheel</button>
-            <button onclick="goToAboutPage()">Go to About Page</button>
+            <button onclick="addWord()">Lisa sõna</button>
+            <button onclick="goToWheel()">Keeruta ratast</button>
         </section>
     </div>
     <script src="main.js"></script>
